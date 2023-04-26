@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+
+# Copyright (C) 2023-present  the-weird-aquarian
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+from sys import argv
+import requests
+from bs4 import BeautifulSoup
+
+
+def usage():
+    print('''
+Usage: 
+python3 get-images <Website URLs>
+
+Examples:
+python3 get-images https://google.com
+python3 get-images https://google.com https://github.com
+    ''')
+    exit()
+
+
+def chk_website_response(website_url):
+    try:
+        response = requests.get(website_url)
+        response.raise_for_status()
+        return response
+    except requests.exceptions.RequestException as e:
+        print(f"Error: Failed to access {website_url}: {e}")
+        return None
+
+
+def get_image_urls(website_urls):
+    if isinstance(website_urls, str):
+        website_urls = [website_urls]
+    for website in website_urls:
+        print(f"\nGetting image URLs from {website}:")
+        response = chk_website_response(website)
+        
+        if response is None:
+            continue
+        
+        soup = BeautifulSoup(response.text, "html.parser")
+        images = soup.find_all('img')
+        image_urls = [image['src'] for image in images]
+        for image in image_urls:
+            if image.startswith("http"):
+                print(f"> {image}") # If website has own full image urls, only print that
+            else:
+                if image.startswith("/"):
+                    image = image[1:] # Remove leading slash
+                print(f"> {website}/{image}") # Else append website url to image url
+
+
+if len(argv) == 1:
+    usage() # Print usage if no url provided
+else:
+    get_image_urls(argv[1:])
