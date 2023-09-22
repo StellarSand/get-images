@@ -29,7 +29,7 @@ Get image URLs from websites.
 ## Installation
 **1. Clone this repo:**
 ```
-git clone https://github.com/the-weird-aquarian/get-images.git
+git clone https://github.com/StellarSand/get-images.git
 ```
 
 **2. Move into the project directory:**
@@ -61,9 +61,9 @@ python3 get-images https://google.com https://github.com
 
 
 ## Contributing
-Pull requests can be submitted [here](https://github.com/the-weird-aquarian/get-images/pulls). Any contribution to the project will be highly appreciated.
+Pull requests can be submitted [here](https://github.com/StellarSand/get-images/pulls). Any contribution to the project will be highly appreciated.
 
 
 
 ## License
-This project is licensed under the terms of [GPLv3.0 license](https://github.com/the-weird-aquarian/get-images/blob/main/LICENSE).
+This project is licensed under the terms of [GPLv3.0 license](https://github.com/StellarSand/get-images/blob/main/LICENSE).
